@@ -1,9 +1,13 @@
-div.hidden {
+/* /* div.hidden {
   display: none;
+} */
+
+.active{
+  font-weight: bolder;
 }
 
-div.active {
-  border: 5px solid red;
+table, th, td {
+  border: 1px solid black;
 }
 
 img.bigcoin {
@@ -12,4 +16,20 @@ img.bigcoin {
 
 img.smallcoin {
   width: 50px;
+}
+
+.parent {
+  margin: 1rem;
+  padding: 2rem 2rem;
+  text-align: center;
+}
+.child {
+  display: inline-block;
+  border: 2px solid black;
+  padding: 1rem 1rem;
+  vertical-align: middle;
+}
+
+#guessButton {
+  display: inline-block;
 }
