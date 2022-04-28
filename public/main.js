@@ -59,7 +59,10 @@ function gcfVisible(){
 }
 
 function flipOneCoin() {
-    document.getElementById("focres").innerHTML = "Flipping..."
+    document.getElementById("spanLoading").style.display="flex"
+    document.getElementById("spanLoading").style.justifyContent="center"
+    document.getElementById("spanLoading").style.marginTop="10px"
+    document.getElementById("spanLoading").style.marginBottom="10px"
     document.getElementById("focresimg").src="assets/img/coin.png";
     fetch("http://localhost:5555/app/flip/",
         {
@@ -72,17 +75,24 @@ function flipOneCoin() {
         .then(res => res.json())
         .then(data => {
             const result = data.flip.toString()
-            setTimeout(function(){
+            return setTimeout(() => {
+                document.getElementById("spanLoading").style.display="none"
                 document.getElementById("focresimg").src="assets/img/"+result+".png";
                 document.getElementById("focres").innerHTML = "Result: " + result + "!"
+                document.getElementById("focres").style.marginTop="10px"
             }, 1000);
         })
 }
 
 function flipMultipleCoins(number) {
+    document.getElementById("spanLoading2").style.display="flex"
+    document.getElementById("spanLoading2").style.justifyContent="center"
+    document.getElementById("spanLoading2").style.marginTop="10px"
+    document.getElementById("spanLoading2").style.marginBottom="10px"
+
     number = Number(number)
     if (!Number.isInteger(number)) {
-        alert("Error! Please enter an integer value for number of flips")
+        alert("Error! Invalid Input!")
         return
     }
     else {
@@ -104,20 +114,22 @@ function flipMultipleCoins(number) {
             const result = data.raw
             const summary = data.summary
             
-
-            let table = document.getElementById("displayTable");
-            const total = parseInt(summary.tails) + parseInt(summary.heads)
-            for (let i = 1; i <= total; i++) {
-                var row = table.insertRow(1);
-                cell1 = row.insertCell(0)
-                cell2 = row.insertCell(1)
-                cell1.innerHTML = total - i + 1
-                cell2.innerHTML = result[total - i]
-           }
-
+            setTimeout(() => {
+                let table = document.getElementById("displayTable");
+                const total = parseInt(summary.tails) + parseInt(summary.heads)
+                for (let i = 1; i <= total; i++) {
+                    fmcVisible()
+                    var row = table.insertRow(1);
+                    cell1 = row.insertCell(0)
+                    cell2 = row.insertCell(1)
+                    cell1.innerHTML = total - i + 1
+                    cell2.innerHTML = result[total - i]
+                }
+                document.getElementById("spanLoading2").style.display="none"
+                return fmcVisible()
+            }, 1500)
+            
         })
-        .then(() => fmcVisible())
-        fmcVisible()
 }
 
 // Guess a flip by clicking either heads or tails button

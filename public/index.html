@@ -57,16 +57,26 @@
     <div id="foc" style = "text-align: center; display:none">
       <h1>Flip One Coin</h1>
       <button type="button" class="btn btn-primary" id="focbtn" onclick = "flipOneCoin()">Flip Coin!</button>
-      <p id = "focres">Click button to flip!</p>
+      <div id="spanLoading" style="display: none;">
+        <div class="spinner-border text-primary" style="display:block; align-self: center;" role="status">
+          <span class="visually-hidden"></span>
+        </div>
+      </div>
+      <p id="focres"></p>
       <img width="100"height="100" id = "focresimg" src = "assets/img/coin.png"/>
     </div>
-    <div id="fmc" style = "text-align: center; display:none">
+    <div id="fmc" style="text-align: center; display:none">
       <h1>Flip Multiple Coins</h1>
       <form onsubmit="flipMultipleCoins(flipNumber.value)">
         <label>Number of Flips: </label>
         <input class="form-control-sm" type="text" name="flipNumber"><br/><br/>
         <button class="btn btn-primary" type="submit">Make Flips</button>
       </form><br/><br/>
+      <div id="spanLoading2" style="display: none;">
+        <div class="spinner-border text-primary" style="display:block; align-self: center;" role="status">
+          <span class="visually-hidden"></span>
+        </div>
+      </div>
       <b>Result: </b>
       <p id = "summary"></p>
       <table class="table" style="width:70%; margin-left: auto; margin-right: auto" id = "displayTable">
@@ -80,7 +90,7 @@
     </div>
     <div id="gcf" style="display: none">
       <div style = "text-align: center">
-        <h1 >Guess A Coin Flip</h1>
+        <h1 >Guess Flip</h1>
         <div style = "display: inline-block">
           <button class="btn btn-primary" id="guessButton" onclick = "guessFlip('heads')">Heads</button>
           <button class="btn btn-primary" id="guessButton" onclick = "guessFlip('tails')">Tails</button>
@@ -88,7 +98,7 @@
       </div>
       <div class = "parent">
         <div class = "child">
-          <p id = "guessVal">Your guess: </p>
+          <p id = "guessVal">Guess: </p>
           <img width="100" height="100" id="guessValImg" src = "assets/img/coin.png"/>
         </div>
         <div class = "child">
