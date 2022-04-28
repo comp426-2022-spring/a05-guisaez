@@ -116,15 +116,15 @@ function flipMultipleCoins(number) {
             
             setTimeout(() => {
                 let table = document.getElementById("displayTable");
-                const total = parseInt(summary.tails) + parseInt(summary.heads)
-                for (let i = 1; i <= total; i++) {
-                    fmcVisible()
-                    var row = table.insertRow(1);
-                    cell1 = row.insertCell(0)
-                    cell2 = row.insertCell(1)
-                    cell1.innerHTML = total - i + 1
-                    cell2.innerHTML = result[total - i]
-                }
+                const heads = parseInt(summary.heads)
+                const tails = parseInt(summary.tails)
+                
+                var row = table.insertRow(1);
+                cell1 = row.insertCell(0)
+                cell2 = row.insertCell(1)
+                cell1.innerHTML = heads
+                cell2.innerHTML = tails
+
                 document.getElementById("spanLoading2").style.display="none"
                 return fmcVisible()
             }, 1500)
