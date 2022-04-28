@@ -10,6 +10,12 @@ function focVisible(){
 
     var focnav = document.getElementById("focnav");
     focnav.style.fontWeight="bolder";
+
+    var gcfnav = document.getElementById("gcfnav");
+    gcfnav.style.fontWeight="normal";
+
+    var fmcnav = document.getElementById("fmcnav");
+    fmcnav.style.fontWeight="normal";
 }
 
 function fmcVisible(){
@@ -24,6 +30,12 @@ function fmcVisible(){
 
     var fmcnav = document.getElementById("fmcnav");
     fmcnav.style.fontWeight="bolder";
+
+    var focnav = document.getElementById("focnav");
+    focnav.style.fontWeight="normal";
+
+    var gcfnav = document.getElementById("gcfnav");
+    gcfnav.style.fontWeight="normal";
 }
 
 function gcfVisible(){
@@ -38,6 +50,12 @@ function gcfVisible(){
 
     var gcfnav = document.getElementById("gcfnav");
     gcfnav.style.fontWeight="bolder";
+
+    var fmcnav = document.getElementById("fmcnav");
+    fmcnav.style.fontWeight="normal";
+
+    var focnav = document.getElementById("focnav");
+    focnav.style.fontWeight="normal";
 }
 
 function flipOneCoin() {
@@ -99,6 +117,7 @@ function flipMultipleCoins(number) {
 
         })
         .then(() => fmcVisible())
+        fmcVisible()
 }
 
 // Guess a flip by clicking either heads or tails button
