@@ -126,8 +126,10 @@ async function flipMultipleCoins(event) {
             var row = table.insertRow(1);
             cell1 = row.insertCell(0)
             cell2 = row.insertCell(1)
+            cell3 = row.insertCell(2)
             cell1.innerHTML = heads
             cell2.innerHTML = tails
+            cell3.innerHTML = coinList(raw)
 
             document.getElementById("spanLoading2").style.display="none"
             return fmcVisible()
@@ -197,4 +199,13 @@ function guessFlip(guess) {
             document.getElementById("guessRes").innerHTML = "Result: " + result
             document.getElementById("winStatement").innerHTML = winStatement
         })
+}
+
+function coinList(array) {
+    let text = "";
+    let arrayLength = array.length
+    for (let i = 0; i < arrayLength; i++) {
+      text += '<li><img src="assets/img/'+array[i]+'.png" class="bigcoin"></li>';
+    }
+    return text
 }
