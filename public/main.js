@@ -36,6 +36,9 @@ function fmcVisible(){
 
     var gcfnav = document.getElementById("gcfnav");
     gcfnav.style.fontWeight="normal";
+
+    const coins = document.getElementById("coins")
+    coins.addEventListener("submit", flipMultipleCoins)
 }
 
 function gcfVisible(){
@@ -66,7 +69,7 @@ function flipOneCoin() {
     document.getElementById("focresimg").src="assets/img/coin.png";
     fetch("http://localhost:5555/app/flip/",
         {
-            method: "POST",
+            method: "GET",
             headers: {
                 "Content-Type": "application/json"
             }
@@ -75,6 +78,7 @@ function flipOneCoin() {
         .then(res => res.json())
         .then(data => {
             const result = data.flip.toString()
+            console.log(result)
             return setTimeout(() => {
                 document.getElementById("spanLoading").style.display="none"
                 document.getElementById("focresimg").src="assets/img/"+result+".png";
@@ -84,52 +88,76 @@ function flipOneCoin() {
         })
 }
 
-function flipMultipleCoins(number) {
+async function flipMultipleCoins(event) {
+    event.preventDefault()
+
     document.getElementById("spanLoading2").style.display="flex"
     document.getElementById("spanLoading2").style.justifyContent="center"
     document.getElementById("spanLoading2").style.marginTop="10px"
     document.getElementById("spanLoading2").style.marginBottom="10px"
 
-    number = Number(number)
-    if (!Number.isInteger(number)) {
-        alert("Error! Invalid Input!")
-        return
-    }
-    else {
-        number = parseInt(number, 10)
-    }
-    fetch("http://localhost:5555/app/flips/"+number,
-        {
-            method: 'POST',
-            headers: {
-                "Accept": "application/json",
-                "Content-Type" : "application/json"
-            },
-            body: JSON.stringify({
-                number: number
-            })
-        })
-        .then(res => res.json())
-        .then(data => {
-            const result = data.raw
-            const summary = data.summary
-            
-            setTimeout(() => {
-                let table = document.getElementById("displayTable");
-                const heads = parseInt(summary.heads)
-                const tails = parseInt(summary.tails)
-                
-                var row = table.insertRow(1);
-                cell1 = row.insertCell(0)
-                cell2 = row.insertCell(1)
-                cell1.innerHTML = heads
-                cell2.innerHTML = tails
+    const endpoint = "app/flip/coins"
+    const url = document.baseURI+endpoint
 
-                document.getElementById("spanLoading2").style.display="none"
-                return fmcVisible()
-            }, 1500)
+    const formEvent = event.currentTarget
+
+
+    try{
+        const formData = new FormData(formEvent)
+        console.log(formData)
+
+        const data = {
+            url : url,
+            formData : formData,
+        }
+
+        const flips = await sendFlips(data)
+
+        console.log(flips);
+
+        const raw = flips.raw
+        const summary = flips.summary
+
+        setTimeout(() => {
+            let table = document.getElementById("displayTable");
+            const heads = parseInt(summary.heads)
+            const tails = parseInt(summary.tails)
             
-        })
+            var row = table.insertRow(1);
+            cell1 = row.insertCell(0)
+            cell2 = row.insertCell(1)
+            cell1.innerHTML = heads
+            cell2.innerHTML = tails
+
+            document.getElementById("spanLoading2").style.display="none"
+            return fmcVisible()
+        }, 1500)
+    } catch (error){
+        console.log(error)
+    }
+}
+
+async function sendFlips(data){
+    const plainFormData = Object.fromEntries(data.formData.entries())
+
+    const formDataJson = JSON.stringify(plainFormData)
+
+    const fetchOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json'
+        },
+        body: formDataJson
+    }
+
+    const response = await fetch(data.url, fetchOptions)
+
+    if(response){
+        console.log(response)
+        return response.json()
+    }
+
 }
 
 // Guess a flip by clicking either heads or tails button
@@ -139,7 +167,7 @@ function guessFlip(guess) {
     document.getElementById("guessResImg").src="assets/img/coin.png";
     document.getElementById("guessVal").innerHTML = "Your guess: "+guess
     document.getElementById("guessValImg").src="assets/img/"+guess+".png";
-    fetch("http://localhost:5555/app/flip/call/"+guess,
+    fetch("/app/flip/call/",
         {
             method: "POST",
             headers: {
