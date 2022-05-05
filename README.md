@@ -79,44 +79,58 @@ Connection: keep-alive
 Keep-Alive: timeout=5
 ```
 
-### /app/flip/ (GET)
+### /app/flip/ (POST)
 
 #### Request cURL
 
 ```
-
+curl http://localhost:5555/app/flip/
 ```
 
 #### Response body
 
 ```
-
+{ 'flip' : '(tails|heads)' }
 ```
 
 #### Response headers
 
 ```
-
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 16
+ETag: W/"23-KNmhzXgQhtEE5ovS3fuLixylNK0"
+Date: Thu, 07 Apr 2022 15:07:49 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
 ```
 
-### /app/flips/:number/ (GET)
+### /app/flips/:number/ (POST)
 
 #### Request cURL
 
 ```
-
+curl http://localhost:5000/app/flips/:number
 ```
 
 #### Response body
 
 ```
-
+{"raw":["(tails|heads){number}"],"summary":{"tails":k,"heads":(number-k)}}
 ```
 
 #### Response headers
 
 ```
-
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 65
+ETag: W/"41-xFD5mLTl1U2bxcpTr2yjO1m6UQg"
+Date: Wed, 27 Apr 2022 00:41:53 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
 ```
 
 ### /app/flip/coin/ (GET)
@@ -124,33 +138,33 @@ Keep-Alive: timeout=5
 #### Request cURL
 
 ```
-
+Endpoint not defined in this application
 ```
 
 #### Response body
 
 ```
-
+N / A
 ```
 
 #### Response headers
 
 ```
-
+N / A
 ```
 
-### /app/flip/call/:guess/ (GET)
+### /app/flip/call/:guess/ (POST)
 
 #### Request cURL
 
 ```
-
+curl http://localhost:5000/app/flip/call/:call(heads|tails)
 ```
 
 #### Response body
 
 ```
-
+{"call":"(heads|tails)","flip":"(heads|tails)","result":"(win|lose)"}
 ```
 
 #### Response headers
